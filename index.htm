@@ -240,7 +240,10 @@ $(".uk-navbar-nav").on('click',function(){
     }
     //苹果
     if (browser.versions.ios || browser.versions.iPhone || browser.versions.iPad) {
-       
+        $(".download_url").attr({"href":"#"});
+       $(".download_url").on("click",function(){
+            alert("Come Soon");
+       })
     }
 
     //安卓
