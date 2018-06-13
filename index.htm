@@ -29,7 +29,7 @@
         background-image: none;
         border: 1px solid transparent;
         border-radius: 0.4rem;
-        background: #11257b;
+        /* background: #11257b; */
         display: none;
     }
     .navbar-toggle:focus {
@@ -72,6 +72,18 @@
     }
     .dn{
         display: none;
+    }
+    .backTop{
+        width: 2rem;
+        height: 2rem;
+        text-align: center;
+        position: fixed;
+        bottom: 1rem;
+        right: 0.5rem;
+        font-size: 1rem;
+        background: #f1efef;
+        display: none;
+        cursor: pointer;
     }
     </style>
     <style type="text/css"></style>
@@ -196,8 +208,7 @@
         </div>
     </div>
 </div>
-<div class="weixin dn">  
-</div>
+<div id="backTop" class='backTop'>^</div>
 </body>
 <script type="text/javascript">
 $(".navbar-toggle").on('click',function(){
@@ -255,6 +266,53 @@ $(".uk-navbar-nav").on('click',function(){
             $(".download_url").attr({"href":"./index/chunjizhang.apk"});
         }
     }
-    /*测试一下*/
+    //返回顶部事件
+   //返回顶部事件
+(function(){
+    var flag=false;//是否显示
+    $(window).scroll(function(){
+        var top = $(this).scrollTop();
+        if(top>200&&!flag){
+            $("#backTop").fadeIn(200);
+            flag=true;
+        }
+        if(top<=200&&flag){
+            $("#backTop").fadeOut(200);
+            flag=false;
+        }
+    })
+
+    $('#backTop').on('click',function(){
+       var doc = document.body.scrollTop? document.body : document.documentElement;
+       easeout(doc.scrollTop,0,5,function(value){
+         doc.scrollTop=value;
+       })
+    })
+    // requestAnimationFrame的兼容处理
+    if (!window.requestAnimationFrame) {
+        requestAnimationFrame = function(fn) {
+            setTimeout(fn, 17);
+        };  
+    }
+    var easeout = function (A, B, rate, callback) {
+        if (A == B || typeof A != 'number') {
+            return;    
+        }
+        B = B || 0;
+        rate = rate || 2;
+        
+        var step = function () {
+            A = A + (B - A) / rate;
+            
+            if (A < 1) {
+                callback(B, true);
+                return;
+            }
+            callback(A, false);
+            requestAnimationFrame(step);    
+        };
+        step();
+    };
+})();
 </script>
 </html>
